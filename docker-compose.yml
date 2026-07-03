@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: archivo_db
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'      # Máximo 50% de un núcleo de CPU
+          memory: 512M      # Máximo 512MB de RAM
+        reservations:
+          memory: 256M      # Garantiza 256MB para Postgres
+
+  backend:
+    build: ./backend
+    container_name: archivo_backend
+    restart: always
+    environment:
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - CORS_ALLOW_ALL_ORIGINS=${CORS_ALLOW_ALL_ORIGINS}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - MINIO_ENDPOINT_URL=${MINIO_ENDPOINT_URL}
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER:-minioadmin}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-minioadmin}
+      - MINIO_BUCKET_NAME=${MINIO_BUCKET_NAME:-archivo-firmas}
+      - MINIO_USE_SSL=${MINIO_USE_SSL:-false}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - minio
+    deploy:
+      resources:
+        limits:
+          cpus: '0.75'      # Máximo 75% de un núcleo de CPU
+          memory: 768M      # Máximo 768MB de RAM
+        reservations:
+          memory: 256M      # Garantiza 256MB para Django
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - VITE_GRAPHQL_URI=${VITE_GRAPHQL_URI}
+    container_name: archivo_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'      # Máximo 25% de un núcleo de CPU
+          memory: 256M      # Máximo 256MB de RAM
+        reservations:
+          memory: 64M       # Garantiza 64MB para Nginx
+
+  minio:
+    image: minio/minio:latest
+    container_name: archivo_minio
+    restart: always
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    volumes:
+      - ./minio_data:/data
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+
+volumes:
+  pgdata:

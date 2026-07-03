@@ -1,0 +1,79 @@
+# Dependencias de Node.js (para frontend y backend)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Variables de entorno (importante para seguridad)
+.env
+.env.local
+.env.production
+notas.txt
+dev.bat
+session-ses_1b5b.md
+
+# Archivos del sistema operativo
+.DS_Store (macOS)
+Thumbs.db (Windows)
+desktop.ini
+
+# Logs
+*.log
+logs/
+log.txt
+
+# Archivos de build/dist
+dist/
+build/
+out/
+.next/ (Next.js)
+.cache/
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archivos de cobertura de tests
+coverage/
+.nyc_output/
+
+# Archivos temporales
+*.tmp
+*.temp
+temp/
+
+# Backend específico (Python/Java/etc)
+__pycache__/
+*.pyc
+*.class
+target/
+
+# Carpetas de configuración local
+.kilo/
+.mimocode/
+
+# Archivos de seed / datos de prueba
+check_data.py
+check_docs.py
+fix_seed.py
+seed_all.py
+seed.py
+seed_data.py
+seed_doc_prestamos.py
+seed_personas.py
+seed_prestamos_completos.py
+seed_prestamos_doc.py
+
+# Media / archivos subidos
+media/
+
+# Documentación
+Manual_de_Usuario.docx
+
+# Frontend específico
+.vite/
+.vercel/
+.env.development
+.env.test

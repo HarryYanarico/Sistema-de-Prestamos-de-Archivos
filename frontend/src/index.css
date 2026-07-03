@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    @apply overflow-hidden h-full;
+  }
+
+  body {
+    @apply bg-surface-50 text-surface-800 font-sans antialiased;
+  }
+
+  .dark body,
+  body.dark {
+    @apply bg-navy-950 text-navy-200;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/80 backdrop-blur-md border border-white/30 shadow-xl;
+  }
+
+  .dark .glass-panel {
+    @apply bg-navy-900/80 backdrop-blur-md border border-navy-700/40 shadow-2xl;
+  }
+
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-sm border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+
+  .dark .glass-card {
+    @apply bg-navy-800/70 backdrop-blur-sm border border-navy-700/30 shadow-lg hover:shadow-xl;
+  }
+
+  .dark .glass-panel table thead {
+    @apply bg-navy-900/90;
+  }
+
+  .dark .glass-panel table tbody tr:hover {
+    @apply bg-navy-800/40;
+  }
+
+  .dark input, .dark select, .dark textarea {
+    @apply bg-navy-800/60 border-navy-700/40 text-navy-200;
+  }
+
+  .dark input::placeholder, .dark textarea::placeholder {
+    @apply text-navy-500;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+.animate-spin-slow {
+  animation: spin 30s linear infinite;
+}
+.animate-float-slow {
+  animation: float 6s ease-in-out infinite;
+}
