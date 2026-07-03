@@ -244,6 +244,18 @@ Traspaso → TraspasoCarpeta
 Incidente → DetalleIncidente
 Usuario → Perfil (2FA, permisos)
 ```
+## Capturas de Pantalla del sistema
+Inicio de session:
+<img width="1360" height="654" alt="image" src="https://github.com/user-attachments/assets/7a8b0d17-9dc0-45eb-a7c1-c8b8fd32cb86" />
+
+Inicio:
+<img width="1350" height="644" alt="image" src="https://github.com/user-attachments/assets/930e0d99-5c8e-4e43-88f1-b0b97e68b4da" />
+
+Dashboard
+<img width="1341" height="643" alt="image" src="https://github.com/user-attachments/assets/31e77148-b8ec-4c83-bb54-d439d0f61275" />
+
+
+
 
 ## Licencia
 
